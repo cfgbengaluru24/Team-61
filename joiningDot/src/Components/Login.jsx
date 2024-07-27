@@ -12,10 +12,8 @@ const LoginPage = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (isLogin) {
-      // TO DO: implement login logic here
       console.log('Login attempted with:', username, password);
     } else {
-      // TO DO: implement signup logic here
       console.log('Signup attempted with:', username, email, password, confirmPassword);
     }
   };
@@ -26,9 +24,10 @@ const LoginPage = () => {
   };
 
   return (
-    <div>
-      <h1>{isLogin ? 'Login' : 'Signup'}</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="loginpage">
+    <div className='logincontainer'>
+      <h1 className='loginheading'>{isLogin ? 'Login' : 'Signup'}</h1>
+      <form onSubmit={handleSubmit} className='loginform'>
         {isLogin ? (
           <div>
             <label>Username:</label>
@@ -66,6 +65,7 @@ const LoginPage = () => {
           </span>
         )}
       </p>
+    </div>
     </div>
   );
 };

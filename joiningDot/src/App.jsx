@@ -1,21 +1,29 @@
-import { createBrowserRouter,RouterProvider} from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LoginPage from './Components/Login'
-import './App.css'
+import StudentDashboard from './Components/StudentDashboard'
+import LoginDashboard from './Components/LoginDashboard';
 
-const router=createBrowserRouter([
+const router = createBrowserRouter([
   {
-    path:'/',
-    element:<LoginPage/>
+    path: '/',
+    element: <LoginDashboard />
+  }, {
+    path: '/loginpage',
+    element: <LoginPage />
+  },
+  {
+    path: '/studentpage',
+    element: <StudentDashboard />
   }
 ]);
 
 function App() {
 
-  
+
 
   return (
     <>
-      <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </>
   )
 }

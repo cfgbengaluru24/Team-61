@@ -1,5 +1,7 @@
 /* Global styles */
-
+#root{
+  height: 100vh;
+}
 * {
     box-sizing: border-box;
     margin: 0;
@@ -13,7 +15,7 @@
   
   /* Form styles */
   
-  form {
+  .loginform {
     max-width: 300px;
     margin: 40px auto;
     padding: 20px;
@@ -74,4 +76,18 @@
     form {
       margin: 20px auto;
     }
+  }
+
+  .loginheading,p{
+    text-align: center;
+  }
+
+  
+  .loginpage{
+    height: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+  .logincontainer{
+    height: max-content;
   }
