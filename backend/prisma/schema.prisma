@@ -31,8 +31,8 @@ model Student {
   is_dropped    Boolean
   clg_id        String
   college       College @relation(fields: [clg_id], references: [college_id])
-  mentor_id     String
-  mentor Mentor @relation(fields: [mentor_id],references: [mentor_id])
+  mentor_id     String?
+  mentor Mentor? @relation(fields: [mentor_id],references: [mentor_id])
   attendance Attendance[]
   tests Test[]
   test_score TestScore[]
@@ -44,7 +44,6 @@ model Mentor{
   mentor_id String @id @default(uuid())
   mentor_email String  @unique 
   name          String
-  reg_no        String
   phone_number  String 
   company_details String
   students Student[]
@@ -110,6 +109,7 @@ model LectureFeedback{
   feedback String
   lecture_id String
   student_id String
+  rating Int
   lecture Lecture @relation(fields: [lecture_id],references: [lecture_id])
   student Student @relation(fields: [student_id],references: [student_id])
 }
