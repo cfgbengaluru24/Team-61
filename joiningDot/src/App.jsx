@@ -3,10 +3,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import LoginPage from './Components/Login'
 import './App.css'
 import Test from './Components/Test'
-
+import InstructionPage from './Components/TestInstruction';
 import StudentDashboard from './Components/StudentDashboard'
 import LoginDashboard from './Components/LoginDashboard';
+import MentorStudentMapping from './Components/MentorStudentMapping';
 
+import './Components/Test.css'
 const router = createBrowserRouter([
   {
     path: '/',
@@ -20,8 +22,16 @@ const router = createBrowserRouter([
     element: <StudentDashboard />
   },
   {
-    path : '/Test',
+    path : '/TestInstruction',
+    element: <InstructionPage/>
+  },
+  {
+    path : 'Test',
     element: <Test/>
+  },
+  {
+    path: '/mentor-student-mapping',
+    element: <MentorStudentMapping />
   }
 ]);
 
