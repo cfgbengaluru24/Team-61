@@ -1,7 +1,5 @@
-import jwt from 'jsonwebtoken';
 import { verifyToken } from '../utils/jwtUtils.js'; // Import utility function for JWT verification
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret';
 
 // Middleware to authenticate users based on JWT
 export const authenticate = (req, res, next) => {
