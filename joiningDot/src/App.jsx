@@ -8,6 +8,7 @@ import StudentDashboard from './Components/StudentDashboard'
 import LoginDashboard from './Components/LoginDashboard';
 import FeedbackForm from './Components/Feedback';
 import MentorPage from './Components/MentorDashboard';
+import MentorStudentMapping from './Components/MentorStudentMapping';
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,9 @@ const router = createBrowserRouter([
   {
     path : '/mentor',
     element: <MentorPage/>
+  },{
+    path : '/ngopage',
+    element: <MentorStudentMapping/>
   }
 ]);
 
