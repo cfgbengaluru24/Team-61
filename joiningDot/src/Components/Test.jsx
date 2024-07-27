@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Question from "./Question";
 import qBank from "./QuestionBank";
-import Score from "./Score";
+
 import "./Test.css";
 
 class Test extends Component {
@@ -69,7 +69,7 @@ class Test extends Component {
             this.state;
         return (
             <div className="App d-flex flex-column align-items-center justify-content-center">
-                <h1 className="app-title">TEST</h1>
+                <h1 className="app-title"></h1>
                 {!quizEnd ? (
                     <Question
                         question={questionBank[currentQuestion]}
@@ -78,11 +78,12 @@ class Test extends Component {
                         onSubmit={this.handleFormSubmit}
                     />
                 ) : (
-                    <Score
-                        score={score}
-                        selectedOptions={this.state.selectedOptions} 
-                        className="score"
-                    />
+                    <div className="quiz-end-message">
+                        <h2>Thank you for completing the test!</h2>
+                        <p>Your responses have been submitted.</p>
+                        {/* Optional: Add a button to return to the home page or instructions page */}
+                        <a href="/" className="btn btn-primary">Return to Home</a>
+                    </div>
                 )}
             </div>
         );
