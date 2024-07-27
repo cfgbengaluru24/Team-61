@@ -1,0 +1,8 @@
+.mentordetails{
+    display: flex;
+    flex-direction: column;
+}
+.mentor-dash{
+    display: flex;
+    justify-content: end;
+}

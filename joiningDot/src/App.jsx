@@ -6,6 +6,8 @@ import Test from './Components/Test'
 
 import StudentDashboard from './Components/StudentDashboard'
 import LoginDashboard from './Components/LoginDashboard';
+import FeedbackForm from './Components/Feedback';
+import MentorPage from './Components/MentorDashboard';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +24,14 @@ const router = createBrowserRouter([
   {
     path : '/Test',
     element: <Test/>
+  },
+  {
+    path : '/feedback',
+    element: <FeedbackForm/>
+  },
+  {
+    path : '/mentor',
+    element: <MentorPage/>
   }
 ]);
 
