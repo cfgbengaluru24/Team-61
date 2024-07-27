@@ -2,21 +2,43 @@ import React, { useState } from 'react';
 import './Login.css';
 
 const LoginPage = () => {
-  const [username, setUsername] = useState('');
+  const [name, setname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [collegename, setcollegename] = useState('');
+  const [registrationid, setregistrationid] = useState('');
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState(null);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if (isLogin) {
-      console.log('Login attempted with:', username, password);
-    } else {
-      console.log('Signup attempted with:', username, email, password, confirmPassword);
+    const endpoint = isLogin ? 'YOUR_LOGIN_ENDPOINT' : 'YOUR_SIGNUP_ENDPOINT';
+    const payload = isLogin
+      ? { username: name, password }
+      : { fullname: name, email, password, collegename, registrationid };
+
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      console.log('Success:', data);
+      // Handle success (e.g., redirect to dashboard)
+    } catch (error) {
+      console.error('Error:', error);
+      setError('Failed to submit. Please try again.');
     }
   };
+
 
   const toggleForm = () => {
     setIsLogin(!isLogin);
@@ -31,15 +53,15 @@ const LoginPage = () => {
         {isLogin ? (
           <div>
             <label>Username:</label>
-            <input type="text" value={username} onChange={(event) => setUsername(event.target.value)} />
+            <input type="text" value={name} onChange={(event) => setname(event.target.value)} />
             <br />
             <label>Password:</label>
             <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} />
           </div>
         ) : (
           <div>
-            <label>Username:</label>
-            <input type="text" value={username} onChange={(event) => setUsername(event.target.value)} />
+            <label>Full Name:</label>
+            <input type="text" value={name} onChange={(event) => setUsername(event.target.value)} />
             <br />
             <label>Email:</label>
             <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} />
@@ -47,8 +69,10 @@ const LoginPage = () => {
             <label>Password:</label>
             <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} />
             <br />
-            <label>Confirm Password:</label>
-            <input type="password" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} />
+            <label>College Name:</label>
+            <input type="password" value={collegename} onChange={(event) => setcollegename(event.target.value)} />
+            <label>Registration Number:</label>
+            <input type="number" value={registrationid} onChange={(event) => setregistrationid(event.target.value)} />
           </div>
         )}
         <button type="submit">{isLogin ? 'Login' : 'Signup'}</button>
