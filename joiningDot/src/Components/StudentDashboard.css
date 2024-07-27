@@ -1,0 +1,65 @@
+
+.student{
+    height: 100vh;
+    margin: 0;
+}
+.studentdash-navbar{
+    display: flex;
+    justify-content: end;
+}
+.attendance {
+    padding: 20px;
+}
+
+.table {
+    margin-top: 20px;
+}
+
+.table th, .table td {
+    text-align: center;
+}
+
+.table thead tr {
+    background-color: #f0f0f0;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+.chart{
+    margin-bottom: 2rem;
+}
+.feedback{
+    display: flex;
+    flex-direction: column;
+}
+.pie-chart{
+    display: flex;
+    height: 500px;
+    margin-bottom: 2rem;
+}
+
+.attendance-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin-top: 10px;
+}
+@media (max-width: 768px) {
+    .attendance-details {
+      flex-direction: column;
+      align-items: center;
+    }
+    .pie-chart {
+      flex-direction: column;
+      align-items: center;
+    }
+    .attendance-details {
+      order: 2;
+    }
+    .pie-chart {
+      order: 1;
+    }
+  }
+
