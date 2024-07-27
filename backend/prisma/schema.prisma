@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,18 +7,111 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-model User{
-  user_id String @id @default(uuid())
-  email String @unique 
+model User {
+  user_id  String @id @default(uuid())
+  email    String @unique 
   password String
-  role String
+  role     String
+}
+
+model College {
+  college_id String    @id @default(uuid())
+  student    Student[]
+  college_name String @unique
+  details String
+}
+
+model Student {
+  student_id    String  @id @default(uuid())
+  student_email String  @unique 
+  name          String
+  reg_no        String
+  phone_number  String 
+  enrolled      Boolean
+  is_dropped    Boolean
+  clg_id        String
+  college       College @relation(fields: [clg_id], references: [college_id])
+  mentor_id     String
+  mentor Mentor @relation(fields: [mentor_id],references: [mentor_id])
+  attendance Attendance[]
+  tests Test[]
+  test_score TestScore[]
+  feedback Feedback[]
+  lecture_feedback LectureFeedback[]
+}
+
+model Mentor{
+  mentor_id String @id @default(uuid())
+  mentor_email String  @unique 
+  name          String
+  reg_no        String
+  phone_number  String 
+  company_details String
+  students Student[]
+}
+
+model Admin{
+  admin_id String @id @default(uuid())
+  admin_email String  @unique 
+  password String
+}
+
+model Attendance{
+  attendance_id String @id @default(uuid())
+  ispresent Boolean 
+  student_id String
+  student Student @relation(fields: [student_id],references: [student_id])
+  lecture_id String
+  lecture Lecture @relation(fields: [lecture_id],references: [lecture_id])
+  feedback Feedback[]
+}
+
+model Lecture{
+  lecture_id String @id @default(uuid())
+  lecture_date DateTime 
+  attendance Attendance[]
+  lecture_feedback LectureFeedback[]
+}
+model Test{
+  test_id String @id @default(uuid())
+  test_date DateTime 
+  student_id String
+  student Student @relation(fields: [student_id],references: [student_id])
+}
+
+model TestScore{
+  score_id String @id @default(uuid())
+  grade String 
+  student_id String
+  student Student @relation(fields: [student_id],references: [student_id])
+}
+
+model Questions{
+  ques_id String @id @default(uuid())
+  question String @unique
+  option1 String
+  option2 String
+  option3 String
+  option4 String
+  answer String
+}
+
+model Feedback{
+  feedback_id String @id @default(uuid())
+  student_id String
+  attendance_id String
+  reason String
+  student Student @relation(fields: [student_id],references: [student_id])
+  attendance Attendance @relation(fields: [attendance_id],references: [attendance_id])
+}
+
+model LectureFeedback{
+  feedback_id String @id @default(uuid())
+  feedback String
+  lecture_id String
+  student_id String
+  lecture Lecture @relation(fields: [lecture_id],references: [lecture_id])
+  student Student @relation(fields: [student_id],references: [student_id])
 }
 
 
-model Student{
-  student_id String @id @default(uuid())
-  email String @unique 
-  password String
-  role String
-}
