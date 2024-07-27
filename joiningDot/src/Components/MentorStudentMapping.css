@@ -1,6 +1,6 @@
 .mentor-student-mapping {
     padding: 20px;
-    max-width: 800px;
+    max-width: 1000px;
     margin: auto;
 }
 
@@ -40,4 +40,16 @@ th, td {
 
 th {
     background-color: #f4f4f4;
+}
+
+.student-details-section, .mentor-details-section {
+    margin-top: 40px;
+}
+
+.student-details-section h3, .mentor-details-section h3 {
+    margin-bottom: 20px;
+}
+
+.mentor-details-section table {
+    margin-top: 20px;
 }

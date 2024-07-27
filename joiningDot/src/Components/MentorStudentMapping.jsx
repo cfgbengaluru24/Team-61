@@ -6,10 +6,12 @@ const MentorStudentMapping = () => {
     const [mentorId, setMentorId] = useState('');
     const [studentId, setStudentId] = useState('');
     const [editMapping, setEditMapping] = useState(null);
+    const [mentors, setMentors] = useState([]); // New state for mentors
 
     useEffect(() => {
-        // Load existing mappings
+        // Load existing mappings and mentors
         fetchMappings();
+        fetchMentors();
     }, []);
 
     const fetchMappings = async () => {
@@ -21,6 +23,18 @@ const MentorStudentMapping = () => {
         setMappings([
             { id: 1, mentorId: 'M1', studentId: 'S1' },
             { id: 2, mentorId: 'M2', studentId: 'S2' },
+        ]); // Mock data
+    };
+
+    const fetchMentors = async () => {
+        // Fetch mentors from an API or data source
+        // Example:
+        // const response = await fetch('/api/mentors');
+        // const data = await response.json();
+        // setMentors(data);
+        setMentors([
+            { mentorId: 'M1', name: 'John Doe', company: 'Tech Corp', phone: '123-456-7890', email: 'john@example.com' },
+            { mentorId: 'M2', name: 'Jane Smith', company: 'Innovate Inc', phone: '987-654-3210', email: 'jane@example.com' },
         ]); // Mock data
     };
 
@@ -139,9 +153,36 @@ const MentorStudentMapping = () => {
             </table>
 
             {/* Placeholder for Student Details Section */}
-            <div className="mentor-student-mapping">
+            <div className="student-details-section">
                 <h3>Student Details</h3>
                 {/* Content for student details will be added later */}
+            </div>
+
+            {/* Mentor Details Section */}
+            <div className="mentor-details-section">
+                <h3>Mentor Details</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mentor ID</th>
+                            <th>Name</th>
+                            <th>Company</th>
+                            <th>Phone No.</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {mentors.map(mentor => (
+                            <tr key={mentor.mentorId}>
+                                <td>{mentor.mentorId}</td>
+                                <td>{mentor.name}</td>
+                                <td>{mentor.company}</td>
+                                <td>{mentor.phone}</td>
+                                <td>{mentor.email}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
         </div>
     );
