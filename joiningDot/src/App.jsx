@@ -2,6 +2,7 @@ import { createBrowserRouter,RouterProvider} from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import LoginPage from './Components/Login'
 import './App.css'
+import TestInstruction from './Components/TestInstruction'
 import Test from './Components/Test'
 
 import StudentDashboard from './Components/StudentDashboard'
@@ -25,8 +26,9 @@ const router = createBrowserRouter([
   },
   {
     path : '/testinstruction',
-    element: <InstructionPage/>
+    element: <TestInstruction/>
   },
+ 
   {
     path : '/test',
     element: <Test/>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Line, Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import './MentorStudentMapping.css'; // Optional: For styling
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ArcElement);
@@ -15,14 +17,12 @@ const MentorStudentMapping = () => {
     const [selectedStudent, setSelectedStudent] = useState(null);
 
     useEffect(() => {
-        // Load existing mappings, mentors, and students
         fetchMappings();
         fetchMentors();
         fetchStudents();
     }, []);
 
     const fetchMappings = async () => {
-        // Mock data for mappings
         setMappings([
             { id: 1, mentorId: 'M1', studentId: 'S1' },
             { id: 2, mentorId: 'M2', studentId: 'S2' },
@@ -30,7 +30,6 @@ const MentorStudentMapping = () => {
     };
 
     const fetchMentors = async () => {
-        // Mock data for mentors
         setMentors([
             { mentorId: 'M1', name: 'John Doe', company: 'Tech Corp', phone: '123-456-7890', email: 'john@example.com' },
             { mentorId: 'M2', name: 'Jane Smith', company: 'Innovate Inc', phone: '987-654-3210', email: 'jane@example.com' },
@@ -38,7 +37,6 @@ const MentorStudentMapping = () => {
     };
 
     const fetchStudents = async () => {
-        // Mock data for students
         setStudents([
             { studentId: 'S1', name: 'Alice Brown', gradeData: [90, 85, 95, 80], attendanceData: [28, 12] },
             { studentId: 'S2', name: 'Bob White', gradeData: [80, 75, 85, 90], attendanceData: [25, 15] },
@@ -79,6 +77,20 @@ const MentorStudentMapping = () => {
     const handleSelectStudent = (studentId) => {
         const student = students.find(s => s.studentId === studentId);
         setSelectedStudent(student);
+    };
+
+    const downloadPDF = () => {
+        const input = document.getElementById('report');
+        html2canvas(input, { scale: 2 }).then((canvas) => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF({
+                orientation: 'portrait',
+                unit: 'px',
+                format: [canvas.width, canvas.height],
+            });
+            pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+            pdf.save('report.pdf');
+        });
     };
 
     const lineChartData = selectedStudent ? {
@@ -228,7 +240,7 @@ const MentorStudentMapping = () => {
             </div>
 
             {selectedStudent && (
-                <div className="student-details">
+                <div className="student-details" id="report">
                     <h3>Selected Student: {selectedStudent.name}</h3>
                     <div className="chart-container">
                         <div className="chart">
@@ -248,7 +260,10 @@ const MentorStudentMapping = () => {
                     </div>
                 </div>
             )}
-
+            <button onClick={downloadPDF} className="btn btn-download">
+                Download PDF
+            </button>
+        
             <div className="mentor-details-section">
                 <h3>Mentor Details</h3>
                 <table>
