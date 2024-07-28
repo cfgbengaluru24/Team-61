@@ -1,7 +1,7 @@
 // routes/mentor.js
 import express from 'express';
-import { authenticate, authorize } from '../middlewares/authMiddleware';
-import { getStudentDetails, getVulnerableStudents, dropStudent } from '../controllers/mentorControllers';
+import { authenticate, authorize } from '../middleware/authMiddleware.js';
+import { getStudentDetails, getVulnerableStudents, dropStudent } from '../controllers/mentorControllers.js';
 
 const mentorRouter = express.Router();
 

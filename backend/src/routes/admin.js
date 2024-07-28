@@ -1,7 +1,7 @@
 // routes/admin.js
 import express from 'express';
-import { authenticate, authorize } from '../middlewares/authMiddleware';
-import { addRelation, deleteRelation, getRelation, getStudentDetails, getMentorDetails, getVulnerableStudents } from '../controllers/adminControllers';
+import { authenticate, authorize } from '../middleware/authMiddleware.js';
+import { addRelation, deleteRelation, getRelation, getStudentDetails, getMentorDetails, getVulnerableStudents } from '../controllers/adminControllers.js';
 
 const adminRouter = express.Router();
 
