@@ -27,10 +27,5 @@ def calculate_negative_rating(row):
 # Apply the function to each row and store the result in the 'Negative Rating' column
 percentiles_df['value'] = percentiles_df.apply(calculate_negative_rating, axis=1)
 percentiles_df['value'] = (percentiles_df['value'] - percentiles_df['value'].min()) / (percentiles_df['value'].max() - percentiles_df['value'].min())
-
-file= open('output.txt', 'r')
-obj = file.read()
-print(type(obj))
-# print(dict(obj))
-# df = pd.from_(obj)
-# print(df)
+percentiles_df = percentiles_df.iloc[:, [0, -1]]
+percentiles_df.to_json('dropout.json')
