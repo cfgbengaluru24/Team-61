@@ -34,8 +34,8 @@
 }
 
 .navbar .btn {
-    color: white;
-    border-color: white;
+    color: rgb(0, 0, 0);
+    background: rgb(153, 255, 0);
 }
 
 /* Container styling */

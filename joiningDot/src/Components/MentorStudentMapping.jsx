@@ -1,56 +1,56 @@
 import React, { useState, useEffect } from 'react';
+import { Line, Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 import './MentorStudentMapping.css'; // Optional: For styling
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ArcElement);
 
 const MentorStudentMapping = () => {
     const [mappings, setMappings] = useState([]);
+    const [mentors, setMentors] = useState([]);
+    const [students, setStudents] = useState([]);
     const [mentorId, setMentorId] = useState('');
     const [studentId, setStudentId] = useState('');
     const [editMapping, setEditMapping] = useState(null);
-    const [mentors, setMentors] = useState([]); // New state for mentors
+    const [selectedStudent, setSelectedStudent] = useState(null);
 
     useEffect(() => {
-        // Load existing mappings and mentors
+        // Load existing mappings, mentors, and students
         fetchMappings();
         fetchMentors();
+        fetchStudents();
     }, []);
 
     const fetchMappings = async () => {
-        // Fetch mappings from an API or data source
-        // Example:
-        // const response = await fetch('/api/mappings');
-        // const data = await response.json();
-        // setMappings(data);
+        // Mock data for mappings
         setMappings([
             { id: 1, mentorId: 'M1', studentId: 'S1' },
             { id: 2, mentorId: 'M2', studentId: 'S2' },
-        ]); // Mock data
+        ]);
     };
 
     const fetchMentors = async () => {
-        // Fetch mentors from an API or data source
-        // Example:
-        // const response = await fetch('/api/mentors');
-        // const data = await response.json();
-        // setMentors(data);
+        // Mock data for mentors
         setMentors([
             { mentorId: 'M1', name: 'John Doe', company: 'Tech Corp', phone: '123-456-7890', email: 'john@example.com' },
             { mentorId: 'M2', name: 'Jane Smith', company: 'Innovate Inc', phone: '987-654-3210', email: 'jane@example.com' },
-        ]); // Mock data
+        ]);
+    };
+
+    const fetchStudents = async () => {
+        // Mock data for students
+        setStudents([
+            { studentId: 'S1', name: 'Alice Brown', gradeData: [90, 85, 95, 80], attendanceData: [28, 12] },
+            { studentId: 'S2', name: 'Bob White', gradeData: [80, 75, 85, 90], attendanceData: [25, 15] },
+        ]);
     };
 
     const getNextId = () => {
-        // Determine the next ID based on existing data
         return mappings.length > 0 ? Math.max(...mappings.map(mapping => mapping.id)) + 1 : 1;
     };
 
     const handleCreate = async () => {
-        // Create a new mapping
         const newMapping = { mentorId, studentId, id: getNextId() };
-        // Send POST request to create mapping
-        // await fetch('/api/mappings', {
-        //     method: 'POST',
-        //     body: JSON.stringify(newMapping),
-        // });
         setMappings([...mappings, newMapping]);
         setMentorId('');
         setStudentId('');
@@ -58,13 +58,7 @@ const MentorStudentMapping = () => {
 
     const handleUpdate = async () => {
         if (editMapping) {
-            // Update existing mapping
             const updatedMapping = { ...editMapping, mentorId, studentId };
-            // Send PUT request to update mapping
-            // await fetch(`/api/mappings/${editMapping.id}`, {
-            //     method: 'PUT',
-            //     body: JSON.stringify(updatedMapping),
-            // });
             setMappings(mappings.map(mapping => (mapping.id === editMapping.id ? updatedMapping : mapping)));
             setEditMapping(null);
             setMentorId('');
@@ -73,10 +67,6 @@ const MentorStudentMapping = () => {
     };
 
     const handleDelete = async (id) => {
-        // Delete mapping
-        // await fetch(`/api/mappings/${id}`, {
-        //     method: 'DELETE',
-        // });
         setMappings(mappings.filter(mapping => mapping.id !== id));
     };
 
@@ -84,6 +74,62 @@ const MentorStudentMapping = () => {
         setMentorId(mapping.mentorId);
         setStudentId(mapping.studentId);
         setEditMapping(mapping);
+    };
+
+    const handleSelectStudent = (studentId) => {
+        const student = students.find(s => s.studentId === studentId);
+        setSelectedStudent(student);
+    };
+
+    const lineChartData = selectedStudent ? {
+        labels: ['Test1', 'Test2', 'Test3', 'Test4'],
+        datasets: [
+            {
+                label: 'Scores',
+                data: selectedStudent.gradeData,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                fill: true,
+            },
+        ],
+    } : {};
+
+    const lineChartOptions = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Subject Scores',
+            },
+        },
+    };
+
+    const pieChartData = selectedStudent ? {
+        labels: ['Present', 'Absent'],
+        datasets: [
+            {
+                label: 'Attendance',
+                data: selectedStudent.attendanceData,
+                backgroundColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)'],
+                hoverBackgroundColor: ['rgba(75, 192, 192, 0.8)', 'rgba(255, 99, 132, 0.8)'],
+            },
+        ],
+    } : {};
+
+    const pieChartOptions = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Attendance',
+            },
+        },
     };
 
     return (
@@ -152,13 +198,57 @@ const MentorStudentMapping = () => {
                 </tbody>
             </table>
 
-            {/* Placeholder for Student Details Section */}
             <div className="student-details-section">
                 <h3>Student Details</h3>
-                {/* Content for student details will be added later */}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {students.map(student => (
+                            <tr key={student.studentId}>
+                                <td>{student.studentId}</td>
+                                <td>{student.name}</td>
+                                <td>
+                                    <button
+                                        onClick={() => handleSelectStudent(student.studentId)}
+                                        className="btn btn-info"
+                                    >
+                                        View Details
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
 
-            {/* Mentor Details Section */}
+            {selectedStudent && (
+                <div className="student-details">
+                    <h3>Selected Student: {selectedStudent.name}</h3>
+                    <div className="chart-container">
+                        <div className="chart">
+                            <h4>Subject Scores</h4>
+                            <Line data={lineChartData} options={lineChartOptions} />
+                        </div>
+
+                        <div className="pie-chart">
+                            <h4>Attendance</h4>
+                            <Pie data={pieChartData} options={pieChartOptions} />
+                            <div className="attendance-details">
+                                <p>Present: {selectedStudent.attendanceData[0]}</p>
+                                <p>Absent: {selectedStudent.attendanceData[1]}</p>
+                                <p>Total Classes: {selectedStudent.attendanceData[0] + selectedStudent.attendanceData[1]}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <div className="mentor-details-section">
                 <h3>Mentor Details</h3>
                 <table>

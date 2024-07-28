@@ -39,7 +39,6 @@ const LoginPage = () => {
     }
   };
 
-
   const toggleForm = () => {
     setIsLogin(!isLogin);
     setError(null);
@@ -47,49 +46,100 @@ const LoginPage = () => {
 
   return (
     <div className="loginpage">
-    <div className='logincontainer'>
-      <h1 className='loginheading'>{isLogin ? 'Login' : 'Signup'}</h1>
-      <form onSubmit={handleSubmit} className='loginform'>
-        {isLogin ? (
-          <div>
-            <label>Username:</label>
-            <input type="text" value={name} onChange={(event) => setname(event.target.value)} />
-            <br />
-            <label>Password:</label>
-            <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} />
-          </div>
-        ) : (
-          <div>
-            <label>Full Name:</label>
-            <input type="text" value={name} onChange={(event) => setUsername(event.target.value)} />
-            <br />
-            <label>Email:</label>
-            <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} />
-            <br />
-            <label>Password:</label>
-            <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} />
-            <br />
-            <label>College Name:</label>
-            <input type="password" value={collegename} onChange={(event) => setcollegename(event.target.value)} />
-            <label>Registration Number:</label>
-            <input type="number" value={registrationid} onChange={(event) => setregistrationid(event.target.value)} />
-          </div>
-        )}
-        <button type="submit">{isLogin ? 'Login' : 'Signup'}</button>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-      </form>
-      <p>
-        {isLogin ? (
-          <span>
-            Don't have an account? <a onClick={toggleForm}>Signup</a>
-          </span>
-        ) : (
-          <span>
-            Already have an account? <a onClick={toggleForm}>Login</a>
-          </span>
-        )}
-      </p>
-    </div>
+      <div className="logincontainer">
+        <h1 className="loginheading">
+          {isLogin ? 'Unlock Your Potential' : 'Join the Movement'}
+        </h1>
+        <p className="loginsubheading">
+          {isLogin
+            ? 'Login to access exclusive resources and community'
+            : 'Sign up to become a part of our women in tech community'}
+        </p>
+        <form onSubmit={handleSubmit} className="loginform">
+          {isLogin ? (
+            <div>
+              <label>Username:</label>
+              <input
+                type="text"
+                value={name}
+                onChange={(event) => setname(event.target.value)}
+                placeholder="Your username"
+              />
+              <br />
+              <label>Password:</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                placeholder="Your password"
+              />
+            </div>
+          ) : (
+            <div>
+              <label>Full Name:</label>
+              <input
+                type="text"
+                value={name}
+                onChange={(event) => setname(event.target.value)}
+                placeholder="Your full name"
+              />
+              <br />
+              <label>Email:</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                placeholder="Your email"
+              />
+              <br />
+              <label>Password:</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                placeholder="Your password"
+              />
+              <br />
+              <label>College Name:</label>
+              <input
+                type="text"
+                value={collegename}
+                onChange={(event) => setcollegename(event.target.value)}
+                placeholder="Your college name"
+              />
+              <br />
+              <label>Registration Number:</label>
+              <input
+                type="number"
+                value={registrationid}
+                onChange={(event) => setregistrationid(event.target.value)}
+                placeholder="Your registration number"
+              />
+            </div>
+          )}
+          <button type="submit" className="loginbutton">
+            {isLogin ? 'Login' : 'Signup'}
+          </button>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+        </form>
+        <p className="loginfooter">
+          {isLogin ? (
+            <span>
+              Don't have an account?{' '}
+              <a onClick={toggleForm} className="loginlink">
+                Signup
+              </a>
+            </span>
+          ) : (
+            <span>
+              Already have an account?{' '}
+              <a onClick={toggleForm} className="loginlink">
+                Login
+              </a>
+            </span>
+          )}
+        </p>
+      </div>
     </div>
   );
 };

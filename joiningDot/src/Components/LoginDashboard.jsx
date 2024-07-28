@@ -1,65 +1,71 @@
+import React, { useState, useEffect } from 'react';
 import './LoginDashboard.css'
 import { useNavigate } from 'react-router-dom';
 const LoginDashboard = () => {
     const navigate = useNavigate();
+    const [activeIndex, setActiveIndex] = useState(0);
+    const [images, setImages] = useState([
+        { src: 'image1.jpg', alt: 'Image 1' },
+        { src: 'image2.jpg', alt: 'Image 2' },
+        { src: 'image3.jpg', alt: 'Image 3' },
+    ]);
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setActiveIndex((prevIndex) => (prevIndex + 1) % images.length);
+        }, 2000);
+        return () => clearInterval(intervalId);
+    }, [images.length]);
+
 
     const handleSignup = () => {
         navigate('/loginpage');
-      };
+    };
+
     return <>
-        <div class="container-fluid">
-            <nav class="navbar bg-body-tertiary">
-                <div class="container-fluid">
-                    <a class="navbar-brand">Joining The Dots</a>
-                    <form class="d-flex" role="search">
-                        <button class="btn btn-outline-success" type="submit" onClick={handleSignup}>Signup</button>
-                    </form>
+        <div class="container">
+            <nav className="navbar-logindashboard">
+                <div className="navbar-left">
+                    <h2>Educate Girls</h2>
+                </div>
+                <div className="navbar-right">
+                    <button className="loginpage-btn">Home</button>
+                    <button className="loginpage-btn">About</button>
+                    <button className="loginpage-btn">Contact</button>
                 </div>
             </nav>
 
-            <div class="container-fluid">
-                <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active" data-bs-interval="10000">
-                            <img src="./image1.jpg" class="d-block w-100" alt="..." />
-                        </div>
-                        <div class="carousel-item" data-bs-interval="2000">
-                            <img src="./image2.jpg" class="d-block w-100" alt="..." />
-                        </div>
-                        <div class="carousel-item">
-                            <img src="/image3.jpg" class="d-block w-100" alt="..." />
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
+            <div class="container-logindashboard">
+                <div className="info-section">
+                    <h2>Empowering Underprivileged Girls Through Education</h2>
+                    <p>Our mission is to provide access to quality education for girls in underserved communities, breaking the cycle of poverty and empowering them to reach their full potential.</p>
                 </div>
-
-                <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active" data-bs-interval="10000">
-                            <img src="./image1.jpg" class="d-block w-100" alt="..." />
-                        </div>
-                        <div class="carousel-item" data-bs-interval="2000">
-                            <img src="./image1.jpg" class="d-block w-100" alt="..." />
-                        </div>
-                        <div class="carousel-item">
-                            <img src="./image1.jpg" class="d-block w-100" alt="..." />
-                        </div>
+                <div className="carousel-section">
+                    <div className="carousel">
+                        {images.map((image, index) => (
+                            <div
+                                key={index}
+                                className={`carousel-item ${activeIndex === index ? 'active' : ''}`}
+                            >
+                                <img src={image.src} alt={image.alt} />
+                            </div>
+                        ))}
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
+                </div>
+            </div>
+
+            <div className="cards-section">
+                <div className="card">
+                    <h3>Card 1</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet nulla auctor, vestibulum magna sed, convallis ex.</p>
+                </div>
+                <div className="card">
+                    <h3>Card 2</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet nulla auctor, vestibulum magna sed, convallis ex.</p>
+                </div>
+                <div className="card">
+                    <h3>Card 3</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet nulla auctor, vestibulum magna sed, convallis ex.</p>
                 </div>
             </div>
         </div>
