@@ -9,6 +9,7 @@ import LoginDashboard from './Components/LoginDashboard';
 import FeedbackForm from './Components/Feedback';
 import MentorPage from './Components/MentorDashboard';
 import MentorStudentMapping from './Components/MentorStudentMapping';
+import InstructionPage from './Components/TestInstruction'
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,11 @@ const router = createBrowserRouter([
     element: <StudentDashboard />
   },
   {
-    path : '/Test',
+    path : '/testinstruction',
+    element: <InstructionPage/>
+  },
+  {
+    path : '/test',
     element: <Test/>
   },
   {

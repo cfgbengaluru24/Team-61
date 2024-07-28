@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Login.css';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const [name, setname] = useState('');
@@ -9,6 +10,7 @@ const LoginPage = () => {
   const [registrationid, setregistrationid] = useState('');
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState(null);
+  const navigate=useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -27,11 +29,16 @@ const LoginPage = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        // throw new Error('Network response was not ok');
+        navigate('/studentpage');
       }
 
       const data = await response.json();
       console.log('Success:', data);
+      if (!isLogin) {
+        // Navigate to testpage when signup is successful
+        navigate('/testinstruction');
+      }
       // Handle success (e.g., redirect to dashboard)
     } catch (error) {
       console.error('Error:', error);
