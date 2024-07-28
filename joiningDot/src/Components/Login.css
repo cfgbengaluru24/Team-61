@@ -1,93 +1,114 @@
-/* Global styles */
-#root{
+.loginpage {
+  background-image: url('p3.jpg');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
   height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-  }
-  
-  /* Form styles */
-  
-  .loginform {
-    max-width: 300px;
-    margin: 40px auto;
+
+.logincontainer {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  max-width: 90%;
+}
+
+.loginheading {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.loginsubheading {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.loginform {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loginform label {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.loginform input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.loginbutton {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.loginbutton:hover {
+  background-color: #3e8e41;
+}
+
+.loginfooter {
+  font-size: 16px;
+  margin-top: 20px;
+  color: #666;
+}
+
+.loginlink {
+  color: #4CAF50;
+  text-decoration: none;
+}
+
+.loginlink:hover {
+  color: #3e8e41;
+}
+
+/* Responsive design */
+
+@media only screen and (max-width: 768px) {
+  .logincontainer {
+    width: 90%;
     padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
-  
-  label {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  input[type="text"],
-  input[type="email"],
-  input[type="password"] {
-    width: 100%;
-    height: 40px;
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-  }
-  
-  input[type="submit"] {
-    width: 100%;
-    height: 40px;
-    background-color: #4CAF50;
-    color: #fff;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  input[type="submit"]:hover {
-    background-color: #3e8e41;
-  }
-  
-  .error {
-    color: red;
-    margin-bottom: 20px;
-  }
-  
-  /* Toggle link styles */
-  
-  .toggle-link {
-    text-decoration: none;
-    color: #337ab7;
-  }
-  
-  .toggle-link:hover {
-    color: #23527c;
-  }
-  
-  /* Responsive styles */
-  
-  @media (max-width: 600px) {
-    form {
-      margin: 20px auto;
-    }
-  }
+}
 
-  .loginheading,p{
-    text-align: center;
+@media only screen and (max-width: 480px) {
+  .logincontainer {
+    width: 100%;
+    padding: 10px;
   }
+  .loginform input {
+    padding: 5px;
+  }
+  .loginbutton {
+    padding: 5px 10px;
+  }
+}
 
-  
-  .loginpage{
-    height: 100%;
-    justify-content: center;
-    text-align: center;
+@media only screen and (max-width: 320px) {
+  .loginheading {
+    font-size: 18px;
   }
-  .logincontainer{
-    height: max-content;
+  .loginsubheading {
+    font-size: 14px;
   }
+  .loginform label {
+    font-size: 14px;
+  }
+}

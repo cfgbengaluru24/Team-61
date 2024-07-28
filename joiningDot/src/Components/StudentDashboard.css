@@ -28,6 +28,7 @@
 }
 .chart{
     margin-bottom: 2rem;
+    width: 800px;
 }
 .feedback{
     display: flex;
@@ -35,8 +36,8 @@
 }
 .pie-chart{
     display: flex;
-    height: 500px;
-    margin-bottom: 2rem;
+  height: 500px;
+  margin-bottom: 2rem;
 }
 
 .attendance-details {
@@ -63,3 +64,24 @@
     }
   }
 
+.chart-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+@media (max-width: 768px) {
+    .chart {
+      width: 100%; /* Reduce the width on smaller screens */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .chart {
+      width: 80%; /* Reduce the width even further on smaller screens */
+    }
+  }
+
+  .studentdashboard{
+    background-color: rgb(223, 232, 233);
+  }

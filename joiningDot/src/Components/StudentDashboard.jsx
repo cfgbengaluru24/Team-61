@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './StudentDashboard.css';
 import { Line, Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
@@ -6,16 +7,33 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ArcElement);
 
 const StudentDashboard = () => {
+    const navigate = useNavigate();
     const totalClasses = 40; // Example total classes till date
     const attendedClasses = 35; // Example attended classes
     const absentClasses = totalClasses - attendedClasses;
 
+    const [numRows, setNumRows] = useState(5); // State to track the number of rows to display
+
+    // Example data for the table and chart
+    const grades = [
+        { subject: 'Test1', grade: 'A', score: 90 },
+        { subject: 'Test2', grade: 'B', score: 85 },
+        { subject: 'Test3', grade: 'A+', score: 95 },
+        { subject: 'Test4', grade: 'B-', score: 80 },
+        { subject: 'Test5', grade: 'C+', score: 70 },
+        { subject: 'Test6', grade: 'A-', score: 88 },
+        { subject: 'Test7', grade: 'B+', score: 84 },
+        { subject: 'Test8', grade: 'A', score: 92 }
+    ];
+
+    const filteredGrades = grades.slice(0, numRows);
+
     const lineChartData = {
-        labels: ['Test1', 'Test2', 'Test3', 'Test4'],
+        labels: filteredGrades.map(grade => grade.subject),
         datasets: [
             {
                 label: 'Score',
-                data: [90, 85, 95, 80],
+                data: filteredGrades.map(grade => grade.score),
                 borderColor: 'rgba(75, 192, 192, 1)',
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 fill: true,
@@ -61,8 +79,16 @@ const StudentDashboard = () => {
         },
     };
 
+    const handleFeedback = () => {
+        navigate('/feedback'); // Replace '/feedback-form' with your actual feedback form route
+    };
+
+    const handleLogout = () => {
+        navigate('/');
+    };
+
     return (
-        <div className="container-fluid">
+        <div className="container-fluid studentdashboard">
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
                 <div className="container-fluid">
                     <a className="navbar-brand" href="#">UserName</a>
@@ -72,11 +98,10 @@ const StudentDashboard = () => {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <a className="nav-link active" aria-current="page" href="#">Home</a>
                             </li>
                         </ul>
                         <form className="d-flex" role="search">
-                            <button className="btn btn-outline-success" type="submit">Logout</button>
+                            <button className="btn btn-outline-success" type="button" onClick={handleLogout}>Logout</button>
                         </form>
                     </div>
                 </div>
@@ -84,6 +109,16 @@ const StudentDashboard = () => {
 
             <div className="container-fluid attendance">
                 <h2>Grades</h2>
+                <div className="row-filter">
+                    <label htmlFor="num-rows">Number of rows to display:</label>
+                    <input 
+                        type="number" 
+                        id="num-rows" 
+                        value={numRows} 
+                        onChange={(e) => setNumRows(parseInt(e.target.value, 10) || 0)} 
+                        min="1"
+                    />
+                </div>
                 <table className="table table-striped">
                     <thead>
                         <tr>
@@ -92,26 +127,18 @@ const StudentDashboard = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Test1</td>
-                            <td>A</td>
-                        </tr>
-                        <tr>
-                            <td>Test2</td>
-                            <td>B</td>
-                        </tr>
-                        <tr>
-                            <td>Test3</td>
-                            <td>A+</td>
-                        </tr>
-                        <tr>
-                            <td>Test4</td>
-                            <td>B-</td>
-                        </tr>
-                        <tr style={{ fontWeight: 'bold' }}>
-                            <td>Cumulative</td>
-                            <td>B+</td>
-                        </tr>
+                        {filteredGrades.map((grade, index) => (
+                            <tr key={index}>
+                                <td>{grade.subject}</td>
+                                <td>{grade.grade}</td>
+                            </tr>
+                        ))}
+                        {grades.length > 0 && numRows > grades.length && (
+                            <tr style={{ fontWeight: 'bold' }}>
+                                <td>Cumulative</td>
+                                <td>B+</td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>
@@ -119,7 +146,7 @@ const StudentDashboard = () => {
             <div className="chart-container">
                 <div className="chart">
                     <h2>Subject Scores</h2>
-                    <Line data={lineChartData} options={lineChartOptions}/>
+                    <Line data={lineChartData} options={lineChartOptions} />
                 </div>
 
                 <div className="pie-chart">
@@ -135,7 +162,7 @@ const StudentDashboard = () => {
 
             <div className='feedback'>
                 <p>Submit Feedback</p>
-                <button type="button" className="btn btn-success">Submit Feedback</button>
+                <button type="button" className="btn btn-success" onClick={handleFeedback}>Submit Feedback</button>
             </div>
         </div>
     );
