@@ -235,12 +235,13 @@ def func():
     # except Exception as e:
     #     print(e)
     #     pass
+    fc = len(os.listdir('frames'))
     for j in os.listdir('output'):
        im = f'output/{j}'
        if scan(im) not in logs.keys():
-           logs[str(scan(im))] = 1
+           logs[str(scan(im))] = 1/fc
        else:
-           logs[str(scan(im))] += get_head_pose(im)
+           logs[str(scan(im))] += get_head_pose(im)/fc
        with open('output.txt','w') as file:
            # output.append(logs)
            file.write(str(logs))
@@ -257,6 +258,7 @@ def final():
 def read():
     with open('output.txt', 'r') as file:
         obj = file.read()
+
         return jsonify(obj)
 
 
