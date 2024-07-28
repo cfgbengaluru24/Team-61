@@ -32,6 +32,7 @@ const LoginDashboard = () => {
                     <button className="loginpage-btn">Home</button>
                     <button className="loginpage-btn">About</button>
                     <button className="loginpage-btn">Contact</button>
+                    <button className="loginpage-btn" onClick={handleSignup}>SignUp</button>
                 </div>
             </nav>
 
@@ -68,6 +69,12 @@ const LoginDashboard = () => {
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet nulla auctor, vestibulum magna sed, convallis ex.</p>
                 </div>
             </div>
+            <iframe
+                src="https://mlsc-tiet-mlscchatbot.hf.space"
+                frameborder="0"
+                width="850"
+                height="450"
+            ></iframe>
         </div>
     </>
 }
