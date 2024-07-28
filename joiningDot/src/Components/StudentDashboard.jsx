@@ -145,7 +145,7 @@ const StudentDashboard = () => {
 
             <div className="chart-container">
                 <div className="chart">
-                    <h2>Subject Scores</h2>
+                    <h2>Test Scores</h2>
                     <Line data={lineChartData} options={lineChartOptions} />
                 </div>
 

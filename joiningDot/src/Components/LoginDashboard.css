@@ -104,6 +104,9 @@
     border: 1px solid #ddd;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    text-align: center;
   }
   
   .card h3 {
@@ -116,4 +119,35 @@
     color: #666;
   }
 
-        
+  .iframe-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.iframe-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.iframe-container iframe {
+    width: 850px;
+    height: 450px;
+    border: none;
+    display: none;
+}
+
+.iframe-container.enlarged iframe {
+    display: block;
+}
