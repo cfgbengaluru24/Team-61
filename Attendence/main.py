@@ -10,7 +10,7 @@ from PIL import Image
 import numpy as np
 import os
 import subprocess
-
+import re
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 import dill as pickle
@@ -65,9 +65,9 @@ def extract_frames(video_path, output_folder):
 
 
 
-def split_image(image_path, output_prefix):
+def split_image(img, output_prefix):
     # Open the image
-    img = Image.open(image_path)
+    # img = Image.open(image_path)
 
     # Convert image to numpy array
     img_array = np.array(img)
@@ -97,6 +97,49 @@ def split_image(image_path, output_prefix):
             # Convert back to image and save
             cell_img = Image.fromarray(cell)
             cell_img.save(f"output/{output_prefix}_{i}_{j}.png")
+
+# def images_without_border(inp,output_prefix):
+#     # img = cv2.imread(inp)
+#     # gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+#     # _,thresh = cv2.threshold(gray,1,255,cv2.THRESH_BINARY)
+#     # contours,hierarchy = cv2.findContours(thresh,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+#     # cnt = contours[0]
+#     # x,y,w,h = cv2.boundingRect(cnt)
+#     # crop = img[y:y+h,x:x+w]
+#     # # img_array = np.array(img)
+#     #
+#     # # Get image dimensions
+#     height, width, _ = crop.shape
+#     # image_path = "frames/frame_0354.jpg"
+#     image = cv2.imread(inp)
+#     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+#     crop = image[125:595, 20:1259]
+#     crop = Image.fromarray(crop)
+#
+#     # cv2.imshow(crop)
+#     crop.save('crop.jpg')
+#     # Define the grid (3x3 in this case)
+#     rows, cols = 2, 3
+#
+#     # Calculate the height and width of each cell
+#     cell_height = height // rows
+#     cell_width = width // cols
+#     image_array = []
+#     # Split the image into cells
+#     for i in range(rows):
+#         for j in range(cols):
+#             # Calculate the boundaries of the current cell
+#             top = i * cell_height
+#             bottom = (i + 1) * cell_height
+#             left = j * cell_width
+#             right = (j + 1) * cell_width
+#
+#             # Extract the cell
+#             cell = crop[top:bottom, left:right]
+#
+#             # Convert back to image and save
+#             cell_img = Image.fromarray(cell)
+#             cell_img.save(f'output/{output_prefix}_{i}_{j}.png')
 
 
 def get_head_pose(image):
@@ -134,15 +177,45 @@ def get_head_pose(image):
 
     return 0
 
-
 def scan(image_path):
   # for i in path:
   #   image_path = f
-    results = reader.readtext(image_path)
+    image = cv2.imread(image_path)
+
+    # Check if the image was loaded successfully
+
+    # Get the dimensions of the image
+    height, width, _ = image.shape
+
+    # Crop the bottom 30 pixels
+    if height > 30:
+        cropped_image = image[-30:, :]
+    else:
+        print("Error: Image height is less than or equal to 30 pixels.")
+        return
+
+    # Save the cropped image
+    cv2.imwrite('hllo.png', cropped_image)
+    try:
+        results = reader.readtext('hllo.png')
+        # print(results)
+        # results = ''.join(char for char in results[1] if char.isalnum() or char.isspace())
+    except:
+        pass
+    # results=results.strip()
+
 
 # Extract and print the text
     for result in results:
-      return result[1]
+      return re.sub(r'[^a-zA-Z0-9\s]','',result[1].strip())
+# def scan(image_path):
+#   # for i in path:
+#   #   image_path = f
+#     results = reader.readtext(image_path)
+#
+# # Extract and print the text
+#     for result in results:
+#       return result[1]
 # extract_frames(r"C:\Users\spars\Downloads\video1646573752.mp4",'frames')
 def func():
   extract_frames(r"C:\Users\spars\Downloads\video1646573752.mp4", 'frames')
@@ -150,9 +223,18 @@ def func():
   output = []
   for i in os.listdir('frames'):
     print(logs)
+    # mage_path = "frames/frame_0354.jpg"
+    image = cv2.imread(f'frames/{i}')
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    crop = image[125:595, 20:1259]
+    crop = Image.fromarray(crop)
+    split_image(crop,'out')
 
-    split_image(f'frames/{i}','out')
-
+    # try:
+    #     images_without_border(f'frames/{i}','out')
+    # except Exception as e:
+    #     print(e)
+    #     pass
     for j in os.listdir('output'):
        im = f'output/{j}'
        if scan(im) not in logs.keys():
